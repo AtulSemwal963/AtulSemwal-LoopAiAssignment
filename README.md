@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Data Ingestion API System
 
 This is my implementation of the Data Ingestion API System assignment. The system handles data ingestion requests with priority-based processing and rate limiting, exactly as specified in the requirements.
@@ -124,3 +125,7 @@ If I were to enhance this system further, I would:
 4. Add request validation middleware
 5. Implement proper logging and monitoring
 6. Add API documentation using Swagger/OpenAPI
+=======
+# AtulSemwal-LoopAiAssignment
+Data Ingestion API System with rate limiting and priority processing
+>>>>>>> ec169c4a0b70b7db8392cf281d70927e8c5ef51e
