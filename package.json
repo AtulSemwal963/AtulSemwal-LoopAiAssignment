@@ -1,7 +1,7 @@
 {
-  "name": "AtulSemwal-LoopAiAssignment",
+  "name": "data-ingestion-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Data Ingestion API System with priority-based processing",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -10,12 +10,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
     "express": "^4.18.2",
+    "cors": "^2.8.5",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
     "jest": "^29.7.0",
     "supertest": "^6.3.3"
+  },
+  "engines": {
+    "node": ">=14.18.0"
   }
 }

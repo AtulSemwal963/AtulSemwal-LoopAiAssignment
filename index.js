@@ -6,7 +6,16 @@ const path = require('path');
 
 //STEP 2: Allowing cross-origin requests to test the API from different origins
 const app = express();
-app.use(cors());
+
+// Configure CORS
+const corsOptions = {
+    origin: '*', // Allow all origins
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 //STEP 3: As per the assignment's requirements, i.e Respect a rate limit of 1 batch per 5 second,we'll use some const variables to configure our rate limiter  
@@ -192,6 +201,13 @@ app.get('/status/:ingestion_id', (req, res) => {
 
 //STEP 9: Starting our server on port 5000
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
+
+// For Vercel deployment
+module.exports = app;
