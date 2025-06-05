@@ -8,14 +8,12 @@ const path = require('path');
 const app = express();
 
 // Configure CORS
-const corsOptions = {
-    origin: '*', // Allow all origins
+app.use(cors({
+    origin: '*',
     methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
-};
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
-app.use(cors(corsOptions));
 app.use(express.json());
 
 //STEP 3: As per the assignment's requirements, i.e Respect a rate limit of 1 batch per 5 second,we'll use some const variables to configure our rate limiter  
