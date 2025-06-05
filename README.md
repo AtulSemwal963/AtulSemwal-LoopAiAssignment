@@ -22,7 +22,7 @@ Before running the application, make sure you have:
 
 1. First, clone this repository to your local machine:
 ```bash
-git clone <repository-url>
+git clone https://github.com/AtulSemwal963/AtulSemwal-LoopAiAssignment.git
 cd data-ingestion-api
 ```
 
