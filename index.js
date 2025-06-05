@@ -90,6 +90,9 @@ const processQueue = async () => {
  * Creates a new ingestion request and queues it for processing
  * Handles the input format: {ids: [1,2,3,4,5], priority: 'HIGH'}
  */
+app.get('/',(req,res)=>{
+    res.send('Welcome to LoopAI. We Hope you enjoy your stay on this API.');
+})
 app.post('/ingest', (req, res) => {
     const { ids, priority } = req.body;
     
