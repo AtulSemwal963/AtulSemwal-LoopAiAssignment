@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test Page</title>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 20px auto; padding: 0 20px; }
+        .container { margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; }
+        .form-group { margin-bottom: 10px; }
+        label { display: block; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 5px; }
+        button { padding: 5px 10px; }
+        #response { margin-top: 10px; white-space: pre-wrap; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Submit Ingestion Request</h3>
+        <div class="form-group">
+            <label>IDs (comma-separated):</label>
+            <input type="text" id="ids" placeholder="1,2,3,4,5">
+        </div>
+        <div class="form-group">
+            <label>Priority:</label>
+            <select id="priority">
+                <option value="HIGH">HIGH</option>
+                <option value="MEDIUM">MEDIUM</option>
+                <option value="LOW">LOW</option>
+            </select>
+        </div>
+        <button onclick="submitIngestion()">Submit</button>
+        <div id="ingestionResponse"></div>
+    </div>
+
+    <div class="container">
+        <h3>Check Status</h3>
+        <div class="form-group">
+            <label>Ingestion ID:</label>
+            <input type="text" id="ingestionId">
+        </div>
+        <button onclick="checkStatus()">Check</button>
+        <div id="statusResponse"></div>
+    </div>
+
+    <script>
+        async function submitIngestion() {
+            const idsInput = document.getElementById('ids').value;
+            const priority = document.getElementById('priority').value;
+            const responseDiv = document.getElementById('ingestionResponse');
+
+            try {
+                const ids = idsInput.split(',').map(id => parseInt(id.trim())).filter(id => !isNaN(id));
+                
+                const response = await fetch('http://localhost:5000/ingest', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ids, priority })
+                });
+
+                const data = await response.json();
+                responseDiv.innerHTML = `Response: ${JSON.stringify(data, null, 2)}`;
+                
+                if (data.ingestion_id) {
+                    document.getElementById('ingestionId').value = data.ingestion_id;
+                }
+            } catch (error) {
+                responseDiv.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+            }
+        }
+
+        async function checkStatus() {
+            const ingestionId = document.getElementById('ingestionId').value;
+            const responseDiv = document.getElementById('statusResponse');
+
+            if (!ingestionId) {
+                responseDiv.innerHTML = '<span class="error">Please enter an ingestion ID</span>';
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:5000/status/${ingestionId}`);
+                const data = await response.json();
+                responseDiv.innerHTML = `Response: ${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                responseDiv.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+            }
+        }
+    </script>
+</body>
+</html> 
